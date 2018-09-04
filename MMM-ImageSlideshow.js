@@ -95,44 +95,12 @@ Module.register("MMM-ImageSlideshow", {
 					
 					// ask helper function to get the image list
 					// create an empty image list
-					self.imageList = [];
+					self.imageList = ["modules/MMM-ImageSlideshow/almose_use/1.png", "modules/MMM-ImageSlideshow/almose_use/2.png"];
 					// set beginning image index to -1, as it will auto increment on start
 					self.imageIndex = -1;
 
 					// self.sendSocketNotification('IMAGESLIDESHOW_REGISTER_CONFIG', self.config);
 
-					var imageList = [];
-					// for each of the paths specified
-					var currentPath = self.config.imagePaths[0];
-					var currentPathImageList = FileSystemImageSlideshow.readdirSync(path = currentPath);
-					// for each file in the current path
-					if (currentPathImageList.length > 0) {
-						// create an empty list for images in the current path
-						var currentImageList = [];
-						// for each file
-						for (var imageIndex = 0; imageIndex < currentPathImageList.length; imageIndex++) {
-							// seperate into path and filename
-							var currentImage = {path: currentPath, filename: currentPathImageList[imageIndex]};
-							// check if file has a valid image file extension
-							var isValidImageFileExtension = self.checkValidImageFileExtension(
-										currentImage.filename, 
-										self.config.validImageFileExtensions);
-							//  if file is valid, add it to the list
-							if (isValidImageFileExtension)
-								currentImageList.push(currentImage);
-						}
-						// if not set to combine all paths, do random or alphabetical sort
-						if (!config.treatAllPathsAsOne) {
-							if (config.randomizeImageOrder)
-								currentImageList = this.shuffleArray(currentImageList);
-							else
-								currentImageList = currentImageList.sort(this.sortByFilename);
-						}
-						// add current list main list
-						imageList = imageList.concat(currentImageList);
-					}
-
-					self.imageList = imageList;
 
 					self.updateDom();
 				}
