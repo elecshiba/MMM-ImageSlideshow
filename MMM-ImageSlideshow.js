@@ -92,9 +92,16 @@ Module.register("MMM-ImageSlideshow", {
 				var imagePaths = [ 'modules/MMM-ImageSlideshow/img' ]
 				if (self.config.imagePaths != imagePaths) {
 					self.config.imagePaths = imagePaths;
+					
 					// ask helper function to get the image list
-					this.sendSocketNotification('IMAGESLIDESHOW_REGISTER_CONFIG', self.config);
+					// create an empty image list
+					self.imageList = [];
+					// set beginning image index to -1, as it will auto increment on start
+					self.imageIndex = -1;
+
+					self.sendSocketNotification('IMAGESLIDESHOW_REGISTER_CONFIG', self.config);
 					self.updateDom();
+					self.interval = null;
 				}
             });        
 	},
