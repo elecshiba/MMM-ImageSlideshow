@@ -59,6 +59,8 @@ Module.register("MMM-ImageSlideshow", {
 			this.interval = null;
 		}
 
+		this.loaded = true;
+
 		// Schedule update
 		var self = this;
 		setInterval(function() {
@@ -169,6 +171,11 @@ Module.register("MMM-ImageSlideshow", {
 			if (this.imageIndex == this.imageList.length) {
 				this.imageIndex = -1;
 			}
+
+			if (this.imageList.length == 0) {
+				showSomething = false;
+			}
+
 			if (showSomething) {
 				// create the image dom bit
 				var image = document.createElement("img");
