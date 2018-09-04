@@ -59,13 +59,19 @@ Module.register("MMM-ImageSlideshow", {
 			this.interval = null;
 		}
 
-		this.loaded = true;
-
+		this.imageIndex = -1;
+		this.imageList = ["modules/MMM-ImageSlideshow/almose_use/1.png", "modules/MMM-ImageSlideshow/almose_use/2.png", "modules/MMM-ImageSlideshow/almose_use/3.png"];
+					
 		// Schedule update
 		var self = this;
+		// setInterval(function() {
+        //     self.fetchData();
+		// }, 0.5 * 1000);
+
+
 		setInterval(function() {
-            self.fetchData();
-		}, 0.5 * 1000);
+            self.updateDom();
+		}, 5 * 1000);
 	},
 
 	fetchData: function() {
@@ -109,102 +115,47 @@ Module.register("MMM-ImageSlideshow", {
             });        
 	},
 
-	// checks there's a valid image file extension
-    checkValidImageFileExtension: function(filename, extensions) {
-        var extList = extensions.split(',');
-        for (var extIndex = 0; extIndex < extList.length; extIndex++) {
-            if (filename.toLowerCase().endsWith(extList[extIndex]))
-                return true;
-        }
-        return false;
-    },
+
 
 	// Define required scripts.
 	getStyles: function() {
         // the css contains the make grayscale code
 		return ["imageslideshow.css"];
 	},    
-	// the socket handler
-	socketNotificationReceived: function(notification, payload) {
-		// if an update was received
-		// return;
-		if (notification === "IMAGESLIDESHOW_FILELIST") {
-			// check this is for this module based on the woeid
-			if (payload.identifier === this.identifier)
-			{
-				// set the image list
-				this.imageList = payload.imageList;
-                // if image list actually contains images
-                // set loaded flag to true and update dom
-                if (this.imageList.length > 0) {
-                    this.loaded = true;
-                    this.updateDom();
-					// set the timer schedule to the slideshow speed			
-					var self = this;
-					this.interval = setInterval(function() {
-						self.updateDom();
-						}, this.config.slideshowSpeed);					
-                }
-			}
-		}
-    },    
+
 	// Override dom generator.
 	getDom: function () {
 		var wrapper = document.createElement("div");
 
+		// create the image dom bit
+		var image = document.createElement("img");
+		image.className = "desaturate";
+
+		// create an empty string
+		var styleString = '';
+		// if width or height or non-zero, add them to the style string
+		if (this.config.fixedImageWidth != 0)
+			styleString += 'width:' + this.config.fixedImageWidth + 'px;';
+		if (this.config.fixedImageHeight != 0)
+			styleString += 'height:' + this.config.fixedImageHeight + 'px;';
+		// if style string has antyhing, set it
+		if (styleString != '')
+			image.style = styleString;
+
+		// set the image location
+		this.imageIndex += 1;
+		if (this.imageIndex >= this.imageList) {
+			this.imageIndex = 0;
+		}
+		image.src = this.imageList[this.imageIndex];
+		// ad the image to the dom
+		wrapper.appendChild(image);	
+
+		
+
+				
 		var message = "";
-
-        // if an error, say so (currently no errors can occur)
-        if (this.errorMessage != null) {
-			wrapper.innerHTML = this.errorMessage;
-			return;
-        }
-
-		// if the image list has been loaded
-		if (this.loaded === true) {
-						
-			// iterate the image list index
-			this.imageIndex += 1;
-			// set flag to show stuff
-			var showSomething = true;
-			// if exceeded the size of the list, go back to zero
-			if (this.imageIndex == this.imageList.length) {
-				this.imageIndex = -1;
-			}
-
-			if (this.imageList.length == 0) {
-				showSomething = false;
-			}
-
-			if (showSomething) {
-				// create the image dom bit
-				var image = document.createElement("img");
-				// if set to make grayscale, flag the class set in the .css file
-				if (this.config.makeImagesGrayscale)
-					image.className = "desaturate";
-				// create an empty string
-				var styleString = '';
-				// if width or height or non-zero, add them to the style string
-				if (this.config.fixedImageWidth != 0)
-					styleString += 'width:' + this.config.fixedImageWidth + 'px;';
-				if (this.config.fixedImageHeight != 0)
-					styleString += 'height:' + this.config.fixedImageHeight + 'px;';
-				// if style string has antyhing, set it
-				if (styleString != '')
-					image.style = styleString;
-				// set the image location
-				image.src = this.imageList[this.imageIndex];
-				message = this.imageList[this.imageIndex];
-				// ad the image to the dom
-				wrapper.appendChild(image);					
-			}
-		}
-		else {
-			// if no data loaded yet, empty html
-			wrapper.innerHTML = "&nbsp;";
-		}
-		
-		
+		message = this.imageList[this.imageIndex];
 		const additionalWrapper = document.createElement("div");
 		additionalWrapper.innerHTML = "<p>" + message + "</p>"
 
