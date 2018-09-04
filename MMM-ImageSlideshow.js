@@ -92,6 +92,8 @@ Module.register("MMM-ImageSlideshow", {
 				var imagePaths = [ 'modules/MMM-ImageSlideshow/img' ]
 				if (self.config.imagePaths != imagePaths) {
 					self.config.imagePaths = imagePaths;
+					// ask helper function to get the image list
+					this.sendSocketNotification('IMAGESLIDESHOW_REGISTER_CONFIG', self.config);
 					self.updateDom();
 				}
             });        
