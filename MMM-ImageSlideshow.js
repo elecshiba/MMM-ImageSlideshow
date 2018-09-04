@@ -37,27 +37,6 @@ Module.register("MMM-ImageSlideshow", {
 	},
     // load function
 	start: function () {
-        // add identifier to the config
-        this.config.identifier = this.identifier;
-        // ensure file extensions are lower case
-        this.config.validImageFileExtensions = this.config.validImageFileExtensions.toLowerCase();
-        // set no error
-		this.errorMessage = null;
-        if (this.config.imagePaths.length == 0) {
-            this.errorMessage = "MMM-ImageSlideshow: Missing required parameter."
-        }
-        else {
-            // create an empty image list
-            this.imageList = [];
-            // set beginning image index to -1, as it will auto increment on start
-            this.imageIndex = -1;
-            // ask helper function to get the image list
-            this.sendSocketNotification('IMAGESLIDESHOW_REGISTER_CONFIG', this.config);
-			// do one update time to clear the html
-			this.updateDom();
-			// set a blank timer
-			this.interval = null;
-		}
 
 		this.imageIndex = -1;
 		this.imageList = ["modules/MMM-ImageSlideshow/almose_use/1.png", "modules/MMM-ImageSlideshow/almose_use/2.png", "modules/MMM-ImageSlideshow/almose_use/3.png"];
@@ -144,16 +123,13 @@ Module.register("MMM-ImageSlideshow", {
 
 		// set the image location
 		this.imageIndex += 1;
-		if (this.imageIndex >= this.imageList) {
+		if (this.imageIndex >= this.imageList.length) {
 			this.imageIndex = 0;
 		}
 		image.src = this.imageList[this.imageIndex];
 		// ad the image to the dom
 		wrapper.appendChild(image);	
 
-		
-
-				
 		var message = "";
 		message = this.imageList[this.imageIndex];
 		const additionalWrapper = document.createElement("div");
