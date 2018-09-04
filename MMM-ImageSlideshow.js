@@ -116,17 +116,17 @@ Module.register("MMM-ImageSlideshow", {
 	getDom: function () {
 		var wrapper = document.createElement("div");
 
+		// create the image dom bit
+		if (this.imageIndex >= this.imageList.length) {
+			return wrapper;
+		}
+
 		var message = "";
 		message = this.message;
 		const additionalWrapper = document.createElement("div");
 		additionalWrapper.innerHTML = "<p>" + message + "</p>"
 
 		wrapper.appendChild(additionalWrapper);
-
-		// create the image dom bit
-		if (this.imageIndex >= this.imageList.length) {
-			return wrapper;
-		}
 
 		var image = document.createElement("img");
 		// image.className = "desaturate";
