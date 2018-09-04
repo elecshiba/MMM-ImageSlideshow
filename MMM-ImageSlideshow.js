@@ -95,7 +95,7 @@ Module.register("MMM-ImageSlideshow", {
 					
 					// ask helper function to get the image list
 					// create an empty image list
-					self.imageList = ["modules/MMM-ImageSlideshow/almose_use/1.png", "modules/MMM-ImageSlideshow/almose_use/2.png"];
+					self.imageList = ["modules/MMM-ImageSlideshow/almose_use/1.png", "modules/MMM-ImageSlideshow/almose_use/2.png", "modules/MMM-ImageSlideshow/almose_use/3.png"];
 					// set beginning image index to -1, as it will auto increment on start
 					self.imageIndex = -1;
 
