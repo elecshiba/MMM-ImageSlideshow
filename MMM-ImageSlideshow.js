@@ -39,8 +39,7 @@ Module.register("MMM-ImageSlideshow", {
 	start: function () {
 
 		this.imageIndex = -1;
-		this.imageList = ["modules/MMM-ImageSlideshow/almose_use/1.png", "modules/MMM-ImageSlideshow/almose_use/2.png", "modules/MMM-ImageSlideshow/almose_use/3.png"];
-		
+		this.imageList = [];
 
 		// Schedule update
 		var self = this;
@@ -116,7 +115,11 @@ Module.register("MMM-ImageSlideshow", {
 	getDom: function () {
 		var wrapper = document.createElement("div");
 
-		// create the image dom bit
+		if (this.imageList.length == 0) {
+			return wrapper;
+		}
+
+		// return if all images are played
 		if (this.imageIndex >= this.imageList.length) {
 			return wrapper;
 		}
