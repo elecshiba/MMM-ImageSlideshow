@@ -92,7 +92,7 @@ Module.register("MMM-ImageSlideshow", {
 				if (self.message != _message) {
 					self.message = _message;
 					self.imageList = [];
-					for (var i = 1; i <= 4; i += 1) {
+					for (var i = 1; i <= 3; i += 1) {
 						var _path = "modules/MMM-ImageSlideshow/" + _img_dir_name + "/" + i + ".png";
 						self.imageList.push(_path);
 					}
@@ -117,7 +117,7 @@ Module.register("MMM-ImageSlideshow", {
 		var wrapper = document.createElement("div");
 
 		var message = "";
-		message = this.imageList[this.imageIndex];
+		message = this.message;
 		const additionalWrapper = document.createElement("div");
 		additionalWrapper.innerHTML = "<p>" + message + "</p>"
 
