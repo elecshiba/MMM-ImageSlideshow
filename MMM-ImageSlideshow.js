@@ -97,7 +97,7 @@ Module.register("MMM-ImageSlideshow", {
 					}
 
 					self.imageIndex = -1;
-					self.updateDom();
+					self.updateDom(3 * 1000);
 
 				}
             });        
