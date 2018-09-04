@@ -59,11 +59,11 @@ Module.register("MMM-ImageSlideshow", {
 			this.interval = null;
 		}
 
-		// Schedule update interval.
+		// Schedule update
 		var self = this;
 		setInterval(function() {
             self.fetchData();
-        }, 0.5 * 1000);
+		}, 0.5 * 1000);
 	},
 
 	fetchData: function() {
@@ -89,9 +89,11 @@ Module.register("MMM-ImageSlideshow", {
                 //     labelArray.push(myJson[i]["product_name"]);
 				// }
 				
-				self.config.slideshowSpeed = 2 * 1000;
-				self.updateDom();
-				
+				var imagePaths = [ 'modules/MMM-ImageSlideshow/img' ]
+				if (self.config.imagePaths != imagePaths) {
+					self.config.imagePaths = imagePaths;
+					self.updateDom();
+				}
             });        
 	},
 
