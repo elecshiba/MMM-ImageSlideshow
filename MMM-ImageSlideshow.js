@@ -49,8 +49,8 @@ Module.register("MMM-ImageSlideshow", {
 
 
 		setInterval(function() {
-            self.updateDom();
-		}, 5 * 1000);
+            self.updateDom(1 * 1000);
+		}, 8 * 1000);
 	},
 
 	fetchData: function() {
@@ -106,9 +106,20 @@ Module.register("MMM-ImageSlideshow", {
 	getDom: function () {
 		var wrapper = document.createElement("div");
 
+		var message = "";
+		message = this.imageList[this.imageIndex];
+		const additionalWrapper = document.createElement("div");
+		additionalWrapper.innerHTML = "<p>" + message + "</p>"
+
+		wrapper.appendChild(additionalWrapper);
+
 		// create the image dom bit
+		if (this.imageIndex >= this.imageList.length) {
+			return wrapper;
+		}
+
 		var image = document.createElement("img");
-		image.className = "desaturate";
+		// image.className = "desaturate";
 
 		// create an empty string
 		var styleString = '';
@@ -123,19 +134,10 @@ Module.register("MMM-ImageSlideshow", {
 
 		// set the image location
 		this.imageIndex += 1;
-		if (this.imageIndex >= this.imageList.length) {
-			this.imageIndex = 0;
-		}
+		
 		image.src = this.imageList[this.imageIndex];
 		// ad the image to the dom
 		wrapper.appendChild(image);	
-
-		var message = "";
-		message = this.imageList[this.imageIndex];
-		const additionalWrapper = document.createElement("div");
-		additionalWrapper.innerHTML = "<p>" + message + "</p>"
-
-		wrapper.appendChild(additionalWrapper);
 
         // return the dom
 		return wrapper;
