@@ -40,12 +40,13 @@ Module.register("MMM-ImageSlideshow", {
 
 		this.imageIndex = -1;
 		this.imageList = ["modules/MMM-ImageSlideshow/almose_use/1.png", "modules/MMM-ImageSlideshow/almose_use/2.png", "modules/MMM-ImageSlideshow/almose_use/3.png"];
-					
+		
+
 		// Schedule update
 		var self = this;
-		// setInterval(function() {
-        //     self.fetchData();
-		// }, 0.5 * 1000);
+		setInterval(function() {
+            self.fetchData();
+		}, 0.5 * 1000);
 
 
 		setInterval(function() {
@@ -75,21 +76,30 @@ Module.register("MMM-ImageSlideshow", {
                 //     numberArray.push(val);
                 //     labelArray.push(myJson[i]["product_name"]);
 				// }
+
+				var _message = "";
+				var _img_dir_name = "";
+				for (var i = 0; i < myJson.length; i+=1) {
+                    // numberArray.push(Math.floor(Math.random() * (100)));
+                    const val = myJson[i]["status"] == 0 ? 1 : 0;
+                    if (myJson[i]["status"] == 0) {
+						_message = myJson[i]["ads"];
+						_img_dir_name = myJson[i]["image_dir"];
+						break;
+                    }
+				}
 				
-				var imagePaths = [ 'modules/MMM-ImageSlideshow/img' ]
-				if (self.config.imagePaths != imagePaths) {
-					self.config.imagePaths = imagePaths;
-					
-					// ask helper function to get the image list
-					// create an empty image list
-					self.imageList = ["modules/MMM-ImageSlideshow/almose_use/1.png", "modules/MMM-ImageSlideshow/almose_use/2.png", "modules/MMM-ImageSlideshow/almose_use/3.png"];
-					// set beginning image index to -1, as it will auto increment on start
+				if (self.message != _message) {
+					self.message = _message;
+					self.imageList = [];
+					for (var i = 1; i <= 4; i += 1) {
+						var _path = "modules/MMM-ImageSlideshow/" + _img_dir_name + "/" + i + ".png";
+						self.imageList.push(_path);
+					}
+
 					self.imageIndex = -1;
-
-					// self.sendSocketNotification('IMAGESLIDESHOW_REGISTER_CONFIG', self.config);
-
-
 					self.updateDom();
+
 				}
             });        
 	},
