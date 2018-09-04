@@ -135,6 +135,9 @@ Module.register("MMM-ImageSlideshow", {
 	// Override dom generator.
 	getDom: function () {
 		var wrapper = document.createElement("div");
+
+		var message = "";
+
         // if an error, say so (currently no errors can occur)
         if (this.errorMessage != null) {
             wrapper.innerHTML = this.errorMessage;
@@ -191,7 +194,7 @@ Module.register("MMM-ImageSlideshow", {
 						image.style = styleString;
 					// set the image location
 					image.src = this.imageList[this.imageIndex];
-					Log.log
+					message = this.imageList[this.imageIndex];
 					// ad the image to the dom
 					wrapper.appendChild(image);					
 				}
@@ -203,10 +206,10 @@ Module.register("MMM-ImageSlideshow", {
 		}
 		
 		const additionalWrapper = document.createElement("div");
-		additionalWrapper.innerHTML = "<p>TEST MSG.</p>"
+		additionalWrapper.innerHTML = "<p>" + message + "</p>"
 
 		wrapper.appendChild(additionalWrapper);
-		
+
         // return the dom
 		return wrapper;
 	}
