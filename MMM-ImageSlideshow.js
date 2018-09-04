@@ -100,8 +100,6 @@ Module.register("MMM-ImageSlideshow", {
 					self.imageIndex = -1;
 
 					self.sendSocketNotification('IMAGESLIDESHOW_REGISTER_CONFIG', self.config);
-					self.updateDom();
-					self.interval = null;
 				}
             });        
 	},
@@ -193,6 +191,7 @@ Module.register("MMM-ImageSlideshow", {
 						image.style = styleString;
 					// set the image location
 					image.src = this.imageList[this.imageIndex];
+					Log.log
 					// ad the image to the dom
 					wrapper.appendChild(image);					
 				}
@@ -201,7 +200,13 @@ Module.register("MMM-ImageSlideshow", {
                 // if no data loaded yet, empty html
                 wrapper.innerHTML = "&nbsp;";
             }
-        }
+		}
+		
+		const additionalWrapper = document.createElement("div");
+		additionalWrapper.innerHTML = "<p>TEST MSG.</p>"
+
+		wrapper.appendChild(additionalWrapper);
+		
         // return the dom
 		return wrapper;
 	}
