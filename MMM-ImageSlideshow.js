@@ -49,8 +49,8 @@ Module.register("MMM-ImageSlideshow", {
 
 
 		setInterval(function() {
-            self.updateDom(1 * 1000);
-		}, 8 * 1000);
+            self.updateDom(2 * 1000);
+		}, 10 * 1000);
 	},
 
 	fetchData: function() {
@@ -115,6 +115,9 @@ Module.register("MMM-ImageSlideshow", {
 	getDom: function () {
 		var wrapper = document.createElement("div");
 
+		// set the image location
+		this.imageIndex += 1;
+
 		if (this.imageList.length == 0) {
 			return wrapper;
 		}
@@ -145,8 +148,7 @@ Module.register("MMM-ImageSlideshow", {
 		if (styleString != '')
 			image.style = styleString;
 
-		// set the image location
-		this.imageIndex += 1;
+		
 		
 		image.src = this.imageList[this.imageIndex];
 		// ad the image to the dom
