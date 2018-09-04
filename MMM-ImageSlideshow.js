@@ -57,8 +57,44 @@ Module.register("MMM-ImageSlideshow", {
 			this.updateDom();
 			// set a blank timer
 			this.interval = null;
-        }
+		}
+
+		// Schedule update interval.
+		var self = this;
+		setInterval(function() {
+            self.fetchData();
+        }, 0.5 * 1000);
 	},
+
+	fetchData: function() {
+        
+        var self = this;
+        fetch('https://script.google.com/macros/s/AKfycbwAsbAMX3LiBGL3mKWacPCutAFmSu518nwftRt3Una1a9qDxNm7/exec?action=latest')
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(myJson) {
+
+                // // Fetch data from Spread sheet, and update the config.
+                // var numberArray = [];
+                // var labelArray  = [];
+                // var chartTitle  = "運命を変えよう";
+                // for (var i = 0; i < myJson.length; i+=1) {
+                //     // numberArray.push(Math.floor(Math.random() * (100)));
+                //     const val = myJson[i]["status"] == 0 ? 1 : 0;
+                //     if (myJson[i]["status"] == 0) {
+                //         chartTitle= myJson[i]["ads"];
+                //     }
+                //     numberArray.push(val);
+                //     labelArray.push(myJson[i]["product_name"]);
+				// }
+				
+				self.config.slideshowSpeed = 2 * 1000;
+				self.updateDom();
+				
+            });        
+	},
+
 	// Define required scripts.
 	getStyles: function() {
         // the css contains the make grayscale code
