@@ -125,7 +125,7 @@ Module.register("MMM-ImageSlideshow", {
 	// the socket handler
 	socketNotificationReceived: function(notification, payload) {
 		// if an update was received
-		return;
+		// return;
 		if (notification === "IMAGESLIDESHOW_FILELIST") {
 			// check this is for this module based on the woeid
 			if (payload.identifier === this.identifier)
